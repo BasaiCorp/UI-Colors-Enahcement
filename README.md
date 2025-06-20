@@ -1,2 +1,2 @@
 # UI-Colors
-Try it at iamsajid.com/ui-colors/
+Link: [iamsajid.com]https://www.iamsajid.com/)
