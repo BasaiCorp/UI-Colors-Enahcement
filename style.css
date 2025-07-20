@@ -137,6 +137,10 @@ a {
 a:hover {
   color: var(--primary);
 }
+
+footer a:hover {
+  color: var(--primary);
+}
 .wrapper {
   min-height: 95vh;
   display: flex;
