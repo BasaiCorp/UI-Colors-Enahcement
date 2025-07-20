@@ -30,11 +30,14 @@ function getResolvedCssVars() {
       [`--bg-light`, `oklch(0.2 ${chromaBg} ${hue})`],
       [`--text`, `oklch(0.96 ${chromaText} ${hue})`],
       [`--text-muted`, `oklch(0.76 ${chromaText} ${hue})`],
+      [`--text-dark`, `oklch(0.85 ${chromaText} ${hue})`],
       [`--highlight`, `oklch(0.5 ${chroma} ${hue})`],
       [`--border`, `oklch(0.4 ${chroma} ${hue})`],
       [`--border-muted`, `oklch(0.3 ${chroma} ${hue})`],
       [`--primary`, `oklch(0.76 ${chromaAction} ${hue})`],
+      [`--primary-dark`, `oklch(0.66 ${chromaAction} ${hue})`],
       [`--secondary`, `oklch(0.76 ${chromaAction} ${hueSecondary})`],
+      [`--secondary-light`, `oklch(0.86 ${chromaAction} ${hueSecondary})`],
       [`--danger`, `oklch(0.7 ${chromaAlert} 30)`],
       [`--warning`, `oklch(0.7 ${chromaAlert} 100)`],
       [`--success`, `oklch(0.7 ${chromaAlert} 160)`],
@@ -46,13 +49,16 @@ function getResolvedCssVars() {
       [`--bg-dark`, `oklch(0.92 ${chromaBg} ${hue})`],
       [`--bg`, `oklch(0.96 ${chromaBg} ${hue})`],
       [`--bg-light`, `oklch(1 ${chromaBg} ${hue})`],
-      [`--text`, `oklch(0.15 ${chroma} ${hue})`],
-      [`--text-muted`, `oklch(0.4 ${chroma} ${hue})`],
+      [`--text`, `oklch(0.15 ${chromaText} ${hue})`],
+      [`--text-muted`, `oklch(0.4 ${chromaText} ${hue})`],
+      [`--text-dark`, `oklch(0.25 ${chromaText} ${hue})`],
       [`--highlight`, `oklch(1 ${chroma} ${hue})`],
       [`--border`, `oklch(0.6 ${chroma} ${hue})`],
       [`--border-muted`, `oklch(0.7 ${chroma} ${hue})`],
       [`--primary`, `oklch(0.4 ${chromaAction} ${hue})`],
+      [`--primary-dark`, `oklch(0.3 ${chromaAction} ${hue})`],
       [`--secondary`, `oklch(0.4 ${chromaAction} ${hueSecondary})`],
+      [`--secondary-light`, `oklch(0.5 ${chromaAction} ${hueSecondary})`],
       [`--danger`, `oklch(0.5 ${chromaAlert} 30)`],
       [`--warning`, `oklch(0.5 ${chromaAlert} 100)`],
       [`--success`, `oklch(0.5 ${chromaAlert} 160)`],
@@ -85,6 +91,44 @@ updateCssVarsPre();
 
 hueSlider.addEventListener("input", updateHueChroma);
 chromaSlider.addEventListener("input", updateHueChroma);
+
+// Font selection
+const headingFontSelect = document.getElementById("heading-font-select");
+const bodyFontSelect = document.getElementById("body-font-select");
+const buttonFontSelect = document.getElementById("button-font-select");
+
+headingFontSelect.addEventListener("change", () => {
+  document.documentElement.style.setProperty(
+    "--ff-heading",
+    headingFontSelect.value
+  );
+});
+
+bodyFontSelect.addEventListener("change", () => {
+  document.documentElement.style.setProperty("--ff-body", bodyFontSelect.value);
+});
+
+buttonFontSelect.addEventListener("change", () => {
+  document.documentElement.style.setProperty(
+    "--ff-button",
+    buttonFontSelect.value
+  );
+});
+
+// Theme selection
+const themeSchemeSelect = document.getElementById("theme-scheme-select");
+themeSchemeSelect.addEventListener("change", () => {
+  const theme = themeSchemeSelect.value;
+  const hue = Number(hueSlider.value);
+  let hueSecondary = (hue + 180) % 360;
+  if (theme === "analogous") {
+    hueSecondary = (hue + 30) % 360;
+  } else if (theme === "monochromatic") {
+    hueSecondary = hue;
+  }
+  document.documentElement.style.setProperty("--hue-secondary", hueSecondary);
+  updateCssVarsPre();
+});
 
 function parseOklch(str) {
   const match = str.match(/oklch\(([\d.]+)\s+([\d.]+)\s+([\d.]+)\)/i);
@@ -237,6 +281,10 @@ document.querySelectorAll("dialog").forEach((dialog) => {
 });
 
 function generateThemeExport(varsDark, varsLight) {
+  const headingFont = headingFontSelect.value;
+  const bodyFont = bodyFontSelect.value;
+  const buttonFont = buttonFontSelect.value;
+
   // Dark mode
   let hslDark = "";
   let oklchDark = "";
@@ -251,5 +299,58 @@ function generateThemeExport(varsDark, varsLight) {
     hslLight += `  ${name}: ${hsl};\n`;
     oklchLight += `  ${name}: ${oklch};\n`;
   }
-  return `:root {\n  /* hsl (fallback color) */\n${hslDark}  /* oklch */\n${oklchDark}}\nbody.light {\n  /* hsl (fallback color) */\n${hslLight}  /* oklch */\n${oklchLight}}`;
+  return `:root {
+  /* hsl (fallback color) */
+${hslDark}
+  /* oklch */
+${oklchDark}
+  --ff-heading: "${headingFont}", sans-serif;
+  --ff-body: "${bodyFont}", sans-serif;
+  --ff-button: "${buttonFont}", sans-serif;
+}
+body.light {
+  /* hsl (fallback color) */
+${hslLight}
+  /* oklch */
+${oklchLight}
+}
+
+/* Add default component styles */
+button {
+  font-family: var(--ff-button);
+  background-color: var(--primary);
+  color: var(--text-dark);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+button:hover {
+  background-color: var(--primary-dark);
+}
+.card {
+  background: var(--bg-gradient);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+}
+.alert {
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  margin-bottom: 1rem;
+}
+.alert-danger {
+  background-color: var(--danger);
+  color: var(--text-dark);
+}
+.alert-warning {
+  background-color: var(--warning);
+  color: var(--text-dark);
+}
+.alert-success {
+  background-color: var(--success);
+  color: var(--text-dark);
+}
+.alert-info {
+  background-color: var(--info);
+  color: var(--text-dark);
+}
+`;
 }

@@ -7,63 +7,71 @@
 :root {
   --hue: 264;
   --hue-secondary: calc(var(--hue) + 180);
+  --hue-analogous: calc(var(--hue) + 30);
   --chroma: 0.05;
   --chroma-bg: calc(var(--chroma) * 0.5);
   --chroma-text: min(var(--chroma), 0.1);
-  --chroma-action: max(var(--chroma), 0.1);
-  --chroma-alert: max(var(--chroma), 0.05);
-  /* bg */
+  --chroma-action: max(var(--chroma), 0.15);
+  --chroma-alert: max(var(--chroma), 0.08);
+
+  /* Backgrounds */
   --bg-dark: oklch(0.1 var(--chroma-bg) var(--hue));
   --bg: oklch(0.15 var(--chroma-bg) var(--hue));
   --bg-light: oklch(0.2 var(--chroma-bg) var(--hue));
-  --gradient: linear-gradient(0deg, var(--bg) 97%, var(--bg-light));
-  --gradient-hover: linear-gradient(0deg, var(--bg), var(--bg-light));
-  /* text */
+  --bg-gradient: linear-gradient(135deg, var(--bg-dark), var(--bg-light));
+
+  /* Text */
   --text: oklch(0.96 var(--chroma-text) var(--hue));
   --text-muted: oklch(0.76 var(--chroma-text) var(--hue));
-  /* border */
+  --text-dark: oklch(0.85 var(--chroma-text) var(--hue));
+
+  /* Borders */
   --highlight: oklch(0.5 var(--chroma) var(--hue));
   --border: oklch(0.4 var(--chroma) var(--hue));
   --border-muted: oklch(0.3 var(--chroma) var(--hue));
-  --border-card: solid 1px var(--border-muted);
-  /* action */
+
+  /* Actions */
   --primary: oklch(0.76 var(--chroma-action) var(--hue));
+  --primary-dark: oklch(0.66 var(--chroma-action) var(--hue));
   --secondary: oklch(0.76 var(--chroma-action) var(--hue-secondary));
-  /* alert */
+  --secondary-light: oklch(0.86 var(--chroma-action) var(--hue-secondary));
+
+  /* Alerts */
   --danger: oklch(0.7 var(--chroma-alert) 30);
   --warning: oklch(0.7 var(--chroma-alert) 100);
   --success: oklch(0.7 var(--chroma-alert) 160);
   --info: oklch(0.7 var(--chroma-alert) 260);
-  /* shadows */
-  --shadow: 0px 2px 2px oklch(0 0 0 / 0.2), 0px 4px 4px oklch(0 0 0 / 0.1);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.1), 0 2px 6px oklch(0 0 0 / 0.05);
+  --shadow-md: 0 4px 8px oklch(0 0 0 / 0.15), 0 6px 12px oklch(0 0 0 / 0.1);
+
   /* type */
-  --ff: "Manrope", sans-serif;
-  --h1: 700 1.5rem/1.2em var(--ff);
-  --h2: 700 1.25rem/1.2em var(--ff);
-  --h3: 700 1.125rem/1.4em var(--ff);
-  --h4: 700 1rem/1.6em var(--ff);
-  --p: 400 1rem/1.6em var(--ff);
-  --small: 400 0.75rem/1.8em var(--ff);
+  --ff-heading: "Montserrat", sans-serif;
+  --ff-body: "Inter", sans-serif;
+  --ff-button: "Exo", sans-serif;
+  --h1: 700 1.5rem/1.2em var(--ff-heading);
+  --h2: 700 1.25rem/1.2em var(--ff-heading);
+  --h3: 700 1.125rem/1.4em var(--ff-heading);
+  --h4: 700 1rem/1.6em var(--ff-heading);
+  --p: 400 1rem/1.6em var(--ff-body);
+  --small: 400 0.75rem/1.8em var(--ff-body);
 }
 body.light {
-  /* bg */
   --bg-dark: oklch(0.92 var(--chroma-bg) var(--hue));
   --bg: oklch(0.96 var(--chroma-bg) var(--hue));
   --bg-light: oklch(1 var(--chroma-bg) var(--hue));
-  --gradient: linear-gradient(0deg, var(--bg) 97%, var(--bg-light));
-  --gradient-hover: linear-gradient(0deg, var(--bg), var(--bg-light));
-  /* text */
-  --text: oklch(0.15 var(--chroma) var(--hue));
-  --text-muted: oklch(0.4 var(--chroma) var(--hue));
-  /* border */
+  --bg-gradient: linear-gradient(135deg, var(--bg-light), var(--bg-dark));
+  --text: oklch(0.15 var(--chroma-text) var(--hue));
+  --text-muted: oklch(0.4 var(--chroma-text) var(--hue));
+  --text-dark: oklch(0.25 var(--chroma-text) var(--hue));
   --highlight: oklch(1 var(--chroma) var(--hue));
   --border: oklch(0.6 var(--chroma) var(--hue));
   --border-muted: oklch(0.7 var(--chroma) var(--hue));
-  --border-card: solid 1px var(--bg);
-  /* action */
   --primary: oklch(0.4 var(--chroma-action) var(--hue));
+  --primary-dark: oklch(0.3 var(--chroma-action) var(--hue));
   --secondary: oklch(0.4 var(--chroma-action) var(--hue-secondary));
-  /* alert */
+  --secondary-light: oklch(0.5 var(--chroma-action) var(--hue-secondary));
   --danger: oklch(0.5 var(--chroma-alert) 30);
   --warning: oklch(0.5 var(--chroma-alert) 100);
   --success: oklch(0.5 var(--chroma-alert) 160);
@@ -106,18 +114,20 @@ button {
   color: var(--text);
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  font: var(--p);
+  font: var(--ff-button);
   cursor: pointer;
-  box-shadow: var(--shadow);
-  border: var(--border-card);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
   border-top: solid 1px var(--highlight);
 }
-button:focus {
-  outline: none;
+button:hover {
+  background: var(--primary-dark);
+  color: var(--text-dark);
+  box-shadow: var(--shadow-md);
 }
-button:hover,
-.card:hover {
-  background: var(--gradient-hover);
+button:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 a {
   text-decoration: none;
@@ -226,6 +236,48 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 0.25rem;
 }
 
+/* Font selectors */
+.font-selectors {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.font-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.font-selector label {
+  font: var(--small);
+  color: var(--text-muted);
+}
+.font-selector select {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--bg-light);
+  color: var(--text);
+  font: var(--p);
+}
+
+.theme-selector {
+  margin-top: 2rem;
+}
+.theme-selector label {
+  font: var(--small);
+  color: var(--text-muted);
+}
+.theme-selector select {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--bg-light);
+  color: var(--text);
+  font: var(--p);
+  width: 100%;
+}
+
 /* cards */
 .cards {
   display: grid;
@@ -233,12 +285,16 @@ input[type="range"]::-webkit-slider-thumb {
   gap: 1rem;
 }
 .card {
-  background: var(--gradient);
+  background: var(--bg-gradient);
   padding: 1rem 2rem;
-  border: var(--border-card);
-  border-top: 1px solid var(--highlight);
+  border: 1px solid var(--border);
   border-radius: 1rem;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-md);
+  transition: all 0.2s ease-in-out;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px oklch(0 0 0 / 0.2), 0 12px 24px oklch(0 0 0 / 0.15);
 }
 /* code and states buttons */
 .buttons {
