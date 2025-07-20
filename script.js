@@ -10,6 +10,7 @@ function toggle() {
 // Sliders
 const hueSlider = document.getElementById("hue-slider");
 const chromaSlider = document.getElementById("chroma-slider");
+const borderRadiusSlider = document.getElementById("border-radius-slider");
 
 function getResolvedCssVars() {
   const hue = Number(hueSlider.value);
@@ -91,6 +92,12 @@ updateCssVarsPre();
 
 hueSlider.addEventListener("input", updateHueChroma);
 chromaSlider.addEventListener("input", updateHueChroma);
+borderRadiusSlider.addEventListener("input", () => {
+  document.documentElement.style.setProperty(
+    "--border-radius",
+    `${borderRadiusSlider.value}px`
+  );
+});
 
 // Font selection
 const headingFontSelect = document.getElementById("heading-font-select");
