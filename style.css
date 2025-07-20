@@ -183,6 +183,9 @@ header {
   stroke: var(--primary);
   width: 1rem;
 }
+.toggle-btn:hover .toggle-icon {
+  stroke: var(--secondary);
+}
 
 /* hue and chroma sliders */
 .sliders {
