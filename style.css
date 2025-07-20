@@ -228,6 +228,14 @@ header {
     oklch(0.6 var(--chroma) 340)
   );
 }
+
+#border-radius-slider {
+  background: linear-gradient(
+    90deg,
+    oklch(0.4 0 var(--hue)),
+    oklch(0.6 0.2 var(--hue))
+  );
+}
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
