@@ -118,7 +118,7 @@ bodyFontSelect.addEventListener("change", () => {
 buttonFontSelect.addEventListener("change", () => {
   document.documentElement.style.setProperty(
     "--ff-button",
-    buttonFontSelect.value
+    `700 1rem/1.6em ${buttonFontSelect.value}`
   );
 });
 
