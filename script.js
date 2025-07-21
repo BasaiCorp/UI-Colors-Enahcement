@@ -292,6 +292,14 @@ function generateThemeExport(varsDark, varsLight) {
   const bodyFont = bodyFontSelect.value;
   const buttonFont = buttonFontSelect.value;
 
+  const fontUrl = `https://fonts.googleapis.com/css2?family=${headingFont.replace(
+    / /g,
+    "+"
+  )}:wght@400;700&family=${bodyFont.replace(
+    / /g,
+    "+"
+  )}:wght@400;700&family=${buttonFont.replace(/ /g, "+")}:wght@400;700&display=swap`;
+
   // Dark mode
   let hslDark = "";
   let oklchDark = "";
@@ -306,7 +314,10 @@ function generateThemeExport(varsDark, varsLight) {
     hslLight += `  ${name}: ${hsl};\n`;
     oklchLight += `  ${name}: ${oklch};\n`;
   }
-  return `:root {
+  return `/* Import Fonts */
+@import url('${fontUrl}');
+
+:root {
   /* hsl (fallback color) */
 ${hslDark}
   /* oklch */
